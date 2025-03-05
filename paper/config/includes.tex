@@ -1,0 +1,116 @@
+%% There is a package that you should include first: nag. Why first? Because it warns you about
+%% obsolete commands and package. https://daniel-j-h.github.io/post/latex-a-modern-approach/
+\usepackage[l2tabu,orthodox]{nag}
+
+%% MISC PACKAGES
+\usepackage{microtype}
+\usepackage[bookmarksdepth=2,backref]{hyperref}
+\usepackage{booktabs}  %% tables
+\usepackage{comment}
+\usepackage{enumitem}
+
+%% LINE NUMBERS
+\usepackage{lineno}
+\linenumbers{}
+
+%% TODO NOTES
+
+\usepackage{comments-bugs-todos}
+\NewDocumentCommand\malb{s m o}{\IfBooleanTF{#1}{\cmnt*{malb}{#2}}{\cmnt{malb}{#2}[#3]}}
+
+%% ANONYMOUS SUBMISSIONS
+\usepackage{ifthen}
+\newcommand{\anonymous}[2]{
+  \ifthenelse{\equal{\isanonymous}{1}}
+  {#1}
+  {#2}
+}
+
+\newcommand{\fullversion}[2]{
+  \ifthenelse{\equal{\isfullversion}{1}}
+  {#1}
+  {#2}
+}
+
+%% SYMBOLS & NOTATION
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{xspace}
+\usepackage[lambda, advantage, operators, sets, adversary, landau, probability, notions,
+logic, ff, mm, primitives, events, complexity, oracles, asymptotics, keys]{cryptocode}
+
+
+%% PLOTS 
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=plots/]
+\tikzset{external/optimize=false}
+\tikzset{external/export=false}
+
+\newcommand{\tikzexternalizemaybe}{%
+  \ifthenelse{\equal{\buildexternal}{1}}%
+  {\tikzset{external/export=true}}%
+  {\tikzset{external/export=false}%
+}}%
+
+% from pgfplotsthemetol.sty
+\definecolor{DarkPurple}{HTML}{332288}
+\definecolor{DarkBlue}{HTML}{6699CC}
+\definecolor{LightBlue}{HTML}{88CCEE}
+\definecolor{DarkGreen}{HTML}{117733}
+\definecolor{DarkRed}{HTML}{661100}
+\definecolor{LightRed}{HTML}{CC6677}
+\definecolor{LightPink}{HTML}{AA4466}
+\definecolor{DarkPink}{HTML}{882255}
+\definecolor{LightPurple}{HTML}{AA4499}
+\definecolor{DarkBrown}{HTML}{604c38}
+\definecolor{DarkTeal}{HTML}{23373b}
+\definecolor{LightBrown}{HTML}{EB811B}
+\definecolor{LightGreen}{HTML}{14B03D}
+
+\pgfplotsset{width=1.0\textwidth,
+  height=0.45\textwidth,
+  cycle list={%
+    solid,\\%
+    dotted,DarkBlue,very thick\\%
+    dashed,DarkGreen,thick\\%
+    loosely dotted,very thick,DarkRed\\%
+    loosely dashed,black,very thick,DarkBrown\\%
+    loosely dashdotted,darkgray,very thick,DarkTeal\\%
+    \\%
+  },
+  legend pos=north west,
+  legend style={fill=none},
+  legend cell align={left}}
+
+%% CONSTANTS
+\usepackage{pgfkeys}
+\input{constants.tex}
+
+%% LISTINGS
+\usepackage{listings}
+\lstdefinelanguage{Sage}[]{Python}{morekeywords={True,False,sage,cdef,cpdef,ctypedef,self},sensitive=true}
+\lstset{frame=none,
+          showtabs=False,
+          showspaces=False,
+          showstringspaces=False,
+          commentstyle=\color{gray!80!black},
+          keywordstyle={\color{gray!80!black}\textbf},
+          stringstyle ={\color{gray!80!black}},
+          basicstyle=\tt\small\relax,,
+        }
+
+\ifluatex
+% provides emulation of pdfTeX primitives for LuaTeX v0.85+.
+\usepackage{luatex85}
+\fi
+\usepackage{navigator}
+        
+%% PDF SETUP
+\hypersetup{colorlinks=true,citecolor=darkgray,linkcolor=darkgray}
+
+%% References 
+\usepackage[capitalize,noabbrev]{cleveref}
